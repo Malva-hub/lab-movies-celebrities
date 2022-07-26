@@ -12,7 +12,11 @@
     <br>
     <label for="cast">Reparto</label>
         <select name="cast" multiple="true">
+            {{!-- Aquí he intentado sombrear los famosos preseleccionados --}}
             {{#each listOfCelebrities}}
+                {{!-- {{#if movieDetails.cast === listOfCelebrities._id}}
+                <option value="{{this._id}}">{{this.name}}</option>
+                {{/if}} --}}
                 <option value="{{this._id}}">{{this.name}}</option>
             {{/each}}
         </select>
