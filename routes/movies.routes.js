@@ -50,8 +50,63 @@ router.get("/", (req, res, next) =>{
     })
 })
 
+//ITERACIÓN 8
+//GET "/movies/:id" => mostrar una película específica
+router.get("/:movieId", (req, res, next) =>{
+    const {movieId} = req.params
+    Movie.findById(movieId).populate("cast")
+    .then((movieDetails)=>{
+        res.render("movies/movie-detail.hbs", {movieDetails})
+    })
+    .catch((err) =>{
+        next(err)
+    })
+})
 
+//ITERACIÓN 9
+//POST "/movies/:movieId/delete" => borrar una película
+router.post("/:movieId/delete", async (req, res, next) => {
+    try {
+        const {movieId} = req.params
+        await Movie.findByIdAndDelete(movieId) 
+        res.redirect("/movies")
+    }catch (err){
+        next(err)
+    } 
+})
 
+//ITERACIÓN 10
+//GET "/movies/:movieId/edit" => renderizar un formulario de editar una película
+router.get("/:movieId/edit", async (req, res, next)=> {
+    try {
+        const {movieId} = req.params
+        const movieDetails = await Movie.findById(movieId)
+        const listOfCelebrities  = await Celebrity.find()
+        res.render("movies/edit-movie.hbs", {movieDetails, listOfCelebrities})
+    }catch(err){
+        next(err)
+    }
+})
+
+//POST "/movies/:movieId/edit" => recibir la data a editar y actualizar la pelicula en la BD
+router.post("/:movieId/edit", (req, res, next) =>{
+
+const {movieId} = req. params
+const {title, genre, plot, cast} = req.body 
+Movie.findByIdAndUpdate(movieId, {
+    title,
+    genre,
+    plot,
+    cast
+})
+.then ((updateMovie) =>{
+    res.redirect(`/movies/${updateMovie._id}`)   
+})
+.catch((err) => {
+    next(err)
+})
+
+})
 
 
 

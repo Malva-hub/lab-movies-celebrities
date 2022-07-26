@@ -1,0 +1,13 @@
+<h2>Detalles de la Película</h2>
+<p>{{movieDetails.title}}</p>
+<p>{{movieDetails.genre}}</p>
+<p>{{movieDetails.plot}}</p>
+<p>Actores de la película:</p>
+{{#each movieDetails.cast}}
+    <li>Nombre:{{this.name}}, Ocupación:{{this.occupation}}, Eslogan: {{this.catchPhrase}}</li>
+{{/each}}
+<a href="/movies/{{movieDetails._id}}/edit"><button>Ir a Editar</button></a>
+
+<form action="/movies/{{movieDetails._id}}/delete" method="POST">
+    <button>Borrar Libro</button>   
+</form>
